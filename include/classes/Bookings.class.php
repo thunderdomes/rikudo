@@ -1411,8 +1411,8 @@ class Bookings extends MicroGrid {
 			'.draw_hidden_field('task', 'check_status', false, 'task').'
 			'.draw_token_field(false).'
 			<table cellspacing="2" border="0">
-			<tr><td>'._ENTER_BOOKING_NUMBER.':</td></tr>
-			<tr><td><input type="text" name="booking_number" style="width:130px" maxlength="20" autocomplete="off" value="" /></td></tr>
+			<tr><td class="check_book">'._ENTER_BOOKING_NUMBER.':</td></tr>
+			<tr><td><input type="text" name="booking_number" style="width:245px" autocomplete="off" value="" /></td></tr>
 			<tr><td style="height:3px"></td></tr>
 			<tr><td><input class="button" type="submit" value="'._CHECK_STATUS.'" /></td></tr>
 			</table>

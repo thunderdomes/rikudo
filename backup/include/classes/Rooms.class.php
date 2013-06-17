@@ -610,7 +610,7 @@ class Rooms extends MicroGrid {
 		$output .= "<tr><td colspan='13'>&nbsp;</td></tr>";
 		$output .= "<tr>";
 		$output .= "  <td colspan='10'></td>";
-		$output .= "  <td align='center' colspan='2'><input type='button' class='form_button' style='width:130px' onclick='javascript:submitPriceForm(\"add_new\")' value='"._ADD_NEW."'></td>";
+		$output .= "  <td align='center' colspan='2'><input type='button' class='form_button' style='width:150px' onclick='javascript:submitPriceForm(\"add_new\")' value='"._ADD_NEW."'></td>";
 		$output .= "  <td></td>";
 		$output .= "</tr>";
 		$output .= "</table>";

@@ -1,6 +1,6 @@
 * {	padding: 0px; margin: 0px; border: 0px; }
 BODY, TABLE, SELECT, INPUT, TEXTAREA
-{ font-family: Georgia, serif; font-size: 12px; line-height: 1.5em; color: #444444; }
+{ font-size: 12px; line-height: 1.5em; color: #444444; }
 BODY 			{ background-color: #fefefe; padding: 0px 0px 0px 7px; }
 
 H1 				{ font-size: 18px; font-weight: normal; background: url(../images/headline_bg.gif) no-repeat left bottom; padding: 0px 0px 15px 0px; margin: 0px 0px 15px 0px; color: #6699CC; }
@@ -9,7 +9,7 @@ H1.center_box_heading TABLE	{ width:99%; font-size: 18px; color: #6699CC; }
 H2 				{ font-size: 18px; font-weight: normal; background: url(../images/headline_bg.gif) no-repeat left bottom; padding: 0px 0px 15px 8px; margin: 0px 0px 5px 0px; color: #6699CC; }
 H2 A 			{ color: #6699CC; text-decoration: none; }
 H2.center_box_heading TABLE	{ width:99%; font-size: 18px; color: #6699CC; }
-H3 				{ font-size: 12px; font-style: italic; color: #6699cc; padding-bottom: 5px; }
+H3 				{ font-size: 15px; font-weight: bold;}
 H3 A 			{ color: #6699cc; text-decoration: none; }
 H4              { color: #000; padding-bottom: 5px; }
 P 				{ padding-bottom: 15px; }
@@ -53,7 +53,7 @@ TEXTAREA		{ border: 1px solid #B2CCE5; padding: 2px 3px 2px 3px; color: #444444;
 INPUT.box   	{ width: auto; }
 
 INPUT[type=submit],
-INPUT[type=button]{ background-color: #6699cc; padding: 0px 3px 0px 3px; color: #FFFFFF; border:2px solid #a3c2e0; }
+INPUT[type=button]{ background-color: #6699cc; padding: 0px 3px 0px 3px; color: #FFFFFF; border:2px solid #a3c2e0; width: 255px }
 SELECT 			{ border: 1px solid #B2CCE5; padding: 2px 3px 2px 3px; color: #444444; margin-right:3px; margin-left:0px; }
 SELECT>OPTION 	{ padding: 0px 3px 0px 3px; }
 
@@ -74,7 +74,7 @@ body{
 /* WRAP */
 #wrap 			{ width: 961px;	margin-left: auto;	margin-right: auto; }
 #left-column 	{ width: 215px; margin: 0px 0px 0px 0px; }
-#left-column-left  { width: 215px; margin: 0px 0px 0px 0px; float:left; }
+#left-column-left  { width: 280px; margin: 0px 0px 0px 0px; float:left; }
 #left-column-right { width: 215px; margin: 0px 0px 0px 0px; float:right; }
 #languages-wrap { position: absolute; margin: 5px 0px 0px 18px; width:203px; height:55px; }
 #languages-wrap DIV { float:left; }
@@ -83,7 +83,7 @@ body{
 #content-wrap 	{ padding: 0px 10px 0px 10px; }
 #content 	  	{ padding: 0px 0px 0px 5px; width: 695px; border:0px solid #ff0000; }
 #content-left  	{ padding: 0px 0px 0px 5px; width: 695px; float:left; border:0px solid #ff0000; }
-#content-right 	{ padding: 0px 0px 0px 5px; width: 695px; float:right; border:0px solid #ff0000; }
+#content-right 	{ padding: 0px 0px 0px 5px; width: 635px; float:right; border:0px solid #ff0000; }
 #content UL	  	{ margin-left: 15px; }
 
 /* MAIN NAVIGATION */
@@ -101,9 +101,9 @@ UL.nav_bg li { float:left; font-size: 13px;}
 #header-wrap img{ height: 375px;}
 #header-wrap-logged { padding: 0px 4px 0px 4px; margin-top:3px; height:2px; }
 #header 		{ background: #fff; padding:10px; height:80px; border-bottom:1px solid #ccc; }
-.site_name A	{ color: #6699CC; font-family:Georgia, serif; font-size:42px; text-decoration:none; }
-.site_name A.header	{ color: #6699CC; font-family:Georgia, serif; font-size:12px; text-decoration:none; }
-.site_name		{ border:0px solid #ff0000; color:#6699CC; padding:10px 10px 0px 10px; font-family:Georgia, serif; font-size:13px; }
+.site_name A	{ color: #6699CC;  font-size:42px; text-decoration:none; }
+.site_name A.header	{ color: #6699CC;  font-size:12px; text-decoration:none; }
+.site_name		{ border:0px solid #ff0000; color:#6699CC; padding:10px 10px 0px 10px;  font-size:13px; }
 .phones			{
     padding: 7px 8px;
     font-weight: bold;
@@ -267,7 +267,7 @@ DIV.slideshow-caption 	   { text-align:center; position:absolute; margin:-49px 2
 /* --- CAPTCHA ---------------------- */
 #captcha_image 		 	    { padding:0px; margin:0px;border:1px solid #e4e8eb }
 
-.max_occupation             { width:40px; }
+.max_occupation             { width:62px; }
 .star_rating                { width:141px; }
 
 /* --- Reservation Details ---------------------- */
@@ -321,4 +321,23 @@ DIV.item{
 .menu-header{
     float: right;
     margin-top: 25px;
+}
+.side_box_heading{
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    font-style:none;
+}
+.check_book{
+    height: 26px;
+    font-weight: 600;
+}
+#checkin_day{
+    width: 110px;
+}
+#checkout_monthday{
+    width: 110px;
+}
+label{
+    margin-bottom: 10px;
 }

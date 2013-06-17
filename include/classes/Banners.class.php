@@ -352,19 +352,7 @@ class Banners extends MicroGrid {
 						$output .= '], function(idx, img, idxOut, imgOut) {
 							var img_alt_split = img.alt.split(\'##\');
 							var caption_width = jQuery(\'div#slideshow\').width() - 20;						
-							if(idxOut == undefined){							
-							  /* starting single image phase, put up caption */
-							  if(img.alt != \'\'){
-								jQuery(\'div.slideshow-caption\').click(function(){ if(img_alt_split[1] != undefined && img_alt_split[1] != \'\') appGoToPage(img_alt_split[1]); });
-								jQuery(\'div.slideshow-caption\').'.(($caption_html == 'yes') ? 'html' : 'text').'(img_alt_split[0]).animate({ opacity: .7 })
-								jQuery(\'div.slideshow-caption\').fadeIn();
-								if(caption_width != null) jQuery(\'div.slideshow-caption\').width(caption_width);
-							  }
-							}else{
-							  // starting cross-fade phase, take out caption
-							  jQuery(\'div.slideshow-caption\').click(function() { });
-							  jQuery(\'div.slideshow-caption\').fadeOut();
-							}}) });';
+						}) });';
 						$output .= '</script>'.$nl;
 						if($ind == 1){
 							$banner_image = '<div class="banners-box-random" id="slideshow">'.$objBanners->GetRandomBanner().'</div>';

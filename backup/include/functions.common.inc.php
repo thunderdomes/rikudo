@@ -943,14 +943,10 @@ function draw_banners_top(&$banner_image, $show_always = true)
 						if(idxOut == undefined){
 						  // starting single image phase, put up caption
 						  if(img.alt != ''){
-							img_alt_split = img.alt.split('##');
-							jQuery('div.slideshow-caption').click(function(){ if(img_alt_split[1] != undefined) document.location.href=img_alt_split[1]; });
-							jQuery('div.slideshow-caption').text(img_alt_split[0]).animate({ opacity: .7 })
-							jQuery('div.slideshow-caption').fadeIn();
+							
 						  }
 						}else{
-						  // starting cross-fade phase, take out caption
-						  jQuery('div.slideshow-caption').fadeOut();
+						  
 						}}) });";
 					$output .= "</script>\n";
 					if($ind == 1){

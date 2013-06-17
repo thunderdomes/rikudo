@@ -395,9 +395,9 @@ class Customers extends MicroGrid {
 			    </td>
 			</tr>
 			<tr><td>'._USERNAME.':</td></tr>
-			<tr><td><input type="text" style="width:130px" name="user_name" id="user_name" maxlength="50" autocomplete="off" value="'.$username.'" /></td></tr>
+			<tr><td><input type="text" style="width:245px" name="user_name" id="user_name" maxlength="50" autocomplete="off" value="'.$username.'" /></td></tr>
 			<tr><td>'._PASSWORD.':</td></tr>
-			<tr><td><input type="password" style="width:130px" name="password" id="password" maxlength="20" autocomplete="off" value="'.$password.'" /></td></tr>
+			<tr><td><input type="password" style="width:245px" name="password" id="password" maxlength="20" autocomplete="off" value="'.$password.'" /></td></tr>
 			<tr><td style="height:5px"></td></tr>
 			<tr><td>';
 			
