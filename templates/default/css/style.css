@@ -87,19 +87,19 @@ body{
 #content UL	  	{ margin-left: 15px; }
 
 /* MAIN NAVIGATION */
-UL.nav 			{ height:38px; list-style-type: none; }
+UL.nav 			{ height:30px; list-style-type: none; }
 UL.nav li 		{ font-size: 18px; white-space: nowrap; }
 UL.nav li a 		{ display: block; color: #A3C2E0; padding: 0px 15px 0px 25px; text-decoration: none; }
 UL.nav li a:hover,
 UL.nav li.active a  { background: url(../images/arrow.gif) no-repeat 15px 7px; color: #6699CC; }
-UL.nav_bg    { padding:16px 0px 0px 240px; height:38px; background: #e7e7e7; list-style-type: none; }
-UL.nav_bg li { float:left; }
+UL.nav_bg    {}
+UL.nav_bg li { float:left; font-size: 13px;}
 
 
 /* HEADER */
 #header-wrap 	{ padding: 0px 4px 0px 4px; margin-top:3px; height:275px; }
 #header-wrap-logged { padding: 0px 4px 0px 4px; margin-top:3px; height:2px; }
-#header 		{ background: #fff; padding:10px; height:55px; border-bottom:1px solid #ccc; }
+#header 		{ background: #fff; padding:10px; height:80px; border-bottom:1px solid #ccc; }
 .site_name A	{ color: #6699CC; font-family:Georgia, serif; font-size:42px; text-decoration:none; }
 .site_name A.header	{ color: #6699CC; font-family:Georgia, serif; font-size:12px; text-decoration:none; }
 .site_name		{ border:0px solid #ff0000; color:#6699CC; padding:10px 10px 0px 10px; font-family:Georgia, serif; font-size:13px; }
@@ -112,7 +112,8 @@ UL.nav_bg li { float:left; }
     background: #DDD;
     border-radius: 3px;
     -moz-border-radius: 3px;
-    top: 15px;
+    width: 250px;
+    float: right;
     right: 0;
 }
 
@@ -313,4 +314,8 @@ DIV.item{
 .wrapper-header{
     width: 960px;
     margin: 0 auto;
+}
+.menu-header{
+    float: right;
+    margin-top: 25px;
 }
