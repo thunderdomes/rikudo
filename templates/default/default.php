@@ -56,7 +56,10 @@ header('content-type: text/html; charset=utf-8');
 	
 	<!-- HEADER -->
 	<?php include_once 'templates/'.Application::Get('template').'/header.php'; ?>
-	
+		<?php
+		// Draw header menu
+		Menu::DrawHeaderMenu();
+	?>	
 		<!-- header-box begin -->
 		<?php
 			if(!$objLogin->IsLoggedInAsCustomer()){
@@ -83,7 +86,7 @@ header('content-type: text/html; charset=utf-8');
 
 	<?php
 		// Draw header menu
-		Menu::DrawHeaderMenu();
+	//	Menu::DrawHeaderMenu();
 	?>		  
 
 	<div id="content-wrap">
