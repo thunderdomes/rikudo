@@ -1,691 +1,109 @@
-<!--
-
-   function __JumpTodayDate(){
-      var jump_day   = GL_jump_day;
-      var jump_month = GL_jump_month;
-      var jump_year  = GL_jump_year;
-      var view_type  = (document.getElementById('view_type')) ? document.getElementById('view_type').value : GL_view_type;
-
-      __doPostBack('view', view_type, jump_year, jump_month, jump_day);
-   }
-
-   function __JumpToDate(){
-      var jump_day   = (document.getElementById('jump_day')) ? document.getElementById('jump_day').value : '';
-      var jump_month = (document.getElementById('jump_month')) ? document.getElementById('jump_month').value : '';
-      var jump_year  = (document.getElementById('jump_year')) ? document.getElementById('jump_year').value : '';
-      var view_type  = (document.getElementById('view_type')) ? document.getElementById('view_type').value : '';
-
-      __doPostBack('view', view_type, jump_year, jump_month, jump_day);
-   }
-
-   function __EventsSort(sort_by, sort_direction){
-      var sort_by     = (sort_by != null) ? sort_by : '';
-      var sort_direction = (sort_direction != null) ? sort_direction : '';
-
-      document.getElementById('hid_sort_by').value = sort_by;
-      document.getElementById('hid_sort_direction').value = sort_direction;
-
-      __doPostBack('view', null, null, null, null, 'events_management');      
-   }
-
-   function __CategoriesSort(sort_by, sort_direction){
-      var sort_by     = (sort_by != null) ? sort_by : '';
-      var sort_direction = (sort_direction != null) ? sort_direction : '';
-
-      document.getElementById('hid_sort_by').value = sort_by;
-      document.getElementById('hid_sort_direction').value = sort_direction;
-
-      __doPostBack('view', null, null, null, null, 'categories_management');      
-   }
-
-   function __doPostBack(action, view_type, year, month, day, event_action, event_id, page, chart_type, category_id)
-   {			
-      var action     = (action != null) ? action : 'view';
-      var view_type  = (view_type != null) ? view_type : 'monthly';
-      var year       = (year != null) ? year : GL_today_year;
-      var month      = (month != null) ? month : GL_today_mon;
-      var day        = (day != null) ? day : GL_today_mday;
-      var event_action = (event_action != null) ? event_action : '';
-      var event_id   = (event_id != null) ? event_id : '';
-      var page       = (page != null) ? page : '1';
-      var chart_type = (chart_type != null) ? chart_type : 'columnchart';
-      var category_id = (category_id != null) ? category_id : '';
-      
-      document.getElementById('hid_event_action').value = event_action;
-      document.getElementById('hid_event_id').value = event_id;
-      document.getElementById('hid_action').value = action;
-      document.getElementById('hid_view_type').value = view_type;
-      document.getElementById('hid_year').value = year;
-      document.getElementById('hid_month').value = month;
-      document.getElementById('hid_day').value = day;
-      document.getElementById('hid_page').value = page;
-      document.getElementById('hid_chart_type').value = chart_type;
-      document.getElementById('hid_category_id').value = category_id;
-      
-      document.getElementById('frmCalendar').submit();
-   }
-
-   function __HideEventForm(el)
-   {
-      document.getElementById(el).style.display = 'none';
-   }
-   
-   function __ShowEventForm(el)
-   {
-      document.getElementById(el).style.display = 'block';
-   }
-   
-   function __CallAddEventForm(el, year, month, day, hour, allow_disabling)
-   {			
-      document.getElementById(el).style.display = 'block';
-      var event_from_year    = document.getElementById('event_from_year');
-      var event_to_year 	 = document.getElementById('event_to_year');				
-      var event_from_month   = document.getElementById('event_from_month');
-      var event_to_month 	 = document.getElementById('event_to_month');				
-      var event_from_day     = document.getElementById('event_from_day');
-      var event_to_day 	     = document.getElementById('event_to_day');				
-      var event_from_hour    = document.getElementById('event_from_hour');
-      var event_to_hour 	 = document.getElementById('event_to_hour');
-      var allow_disabling 	 = (allow_disabling != null) ? allow_disabling : false;      
-  
-      for(i = 0; i < event_from_hour.length; i++){
-         if(allow_disabling){
-            if(event_from_hour.options[i].value < hour){
-               event_from_hour.options[i].disabled = true;
-            }else{
-               event_from_hour.options[i].disabled = false;
-            }            
-         }
-         if(event_from_hour.options[i].value == hour){
-            event_from_hour.options[i].disabled = false;
-            event_from_hour.options[i].selected = true;
-            event_to_hour.options[i+1].selected = true;
-         }
-      }
-
-      for(i = 0; i < event_from_day.length; i++){
-         if(event_from_day.options[i].value == day){
-            event_from_day.options[i].selected = true;
-            event_to_day.options[i].selected = true;
-         }
-      }
-
-      for(i = 0; i < event_from_month.length; i++){
-         if(event_from_month.options[i].value == month){
-            event_from_month.options[i].selected = true;
-            event_to_month.options[i].selected = true;
-         }
-      }
-      
-      for(i = 0; i < event_from_year.length; i++){
-         if(event_from_year.options[i].value == year){
-            event_from_year.options[i].selected = true;
-            event_to_year.options[i].selected = true;
-         }
-      }
-      
-      document.getElementById('divAddEvent_msg').innerHTML = '';
-      document.getElementById('event_name').value = '';
-      document.getElementById('event_description').value = '';
-      document.getElementById('event_name').focus();
-   }
-
-   /////////////////////////////////////////////////////////////////////////////   
-   // EVENTS
-
-   // Cancel event inserting 
-   function __EventsCancel(){      
-      __doPostBack('view', null, null, null, null, 'events_management');
-      return true;
-   }
-
-   // Back to events management
-   function __EventsBack(event_name){
-      var jump_day   = (document.getElementById('jump_day')) ? document.getElementById('jump_day').value : '';
-      var jump_month = (document.getElementById('jump_month')) ? document.getElementById('jump_month').value : '';
-      var jump_year  = (document.getElementById('jump_year')) ? document.getElementById('jump_year').value : '';
-      var view_type  = (document.getElementById('view_type')) ? document.getElementById('view_type').value : '';
-      var event_name  = (event_name) ? event_name : 'events_management';
-
-      __doPostBack('view', view_type, jump_year, jump_month, jump_day, event_name);
-      return true;
-   }
-
-   // Delete event 
-   function __EventsDelete(eid){			
-      if(confirm(Vocabulary._MSG["alert_delete_event_occurrences"])){			
-         var jump_day   = (document.getElementById('jump_day')) ? document.getElementById('jump_day').value : '';
-         var jump_month = (document.getElementById('jump_month')) ? document.getElementById('jump_month').value : '';
-         var jump_year  = (document.getElementById('jump_year')) ? document.getElementById('jump_year').value : '';
-         var view_type  = (document.getElementById('view_type')) ? document.getElementById('view_type').value : '';
-     
-         __doPostBack('view', view_type, jump_year, jump_month, jump_day, 'events_delete', eid);
-         return true;
-      }
-      return false;
-   }
-
-   // Edit event
-   function __EventsEdit(eid){
-      var jump_day   = (document.getElementById('jump_day')) ? document.getElementById('jump_day').value : '';
-      var jump_month = (document.getElementById('jump_month')) ? document.getElementById('jump_month').value : '';
-      var jump_year  = (document.getElementById('jump_year')) ? document.getElementById('jump_year').value : '';
-      var view_type  = (document.getElementById('view_type')) ? document.getElementById('view_type').value : '';
-
-      __doPostBack('view', view_type, jump_year, jump_month, jump_day, 'events_edit', eid);
-      return true;
-   }   
-
-   // View event details
-   function __EventsDetails(eid){
-      var jump_day   = (document.getElementById('jump_day')) ? document.getElementById('jump_day').value : '';
-      var jump_month = (document.getElementById('jump_month')) ? document.getElementById('jump_month').value : '';
-      var jump_year  = (document.getElementById('jump_year')) ? document.getElementById('jump_year').value : '';
-      var view_type  = (document.getElementById('view_type')) ? document.getElementById('view_type').value : '';
-
-      __doPostBack('view', view_type, jump_year, jump_month, jump_day, 'events_details', eid);
-      return true;
-   }   
-
-   // Delete by range 
-   function __EventsDeleteByRange(){      
-      
-      var event_from_year  = document.getElementById('event_from_year');
-      var event_to_year    = document.getElementById('event_to_year');
-      var event_from_month = document.getElementById('event_from_month');
-      var event_to_month   = document.getElementById('event_to_month');
-      var event_from_day   = document.getElementById('event_from_day');
-      var event_to_day 	   = document.getElementById('event_to_day');
-      var event_insertion_type = __getCheckedValue(document.forms['frmCalendar'].event_insertion_type);
-
-      start_datetime  = event_from_year.value+event_from_month.value+event_from_day.value;
-      finish_datetime = event_to_year.value+event_to_month.value+event_to_day.value;
-
-      if(start_datetime >= finish_datetime){
-         document.getElementById('divEventsDeleteByRange_msg').innerHTML = "<span class='msg_error'>"+Vocabulary._MSG["msg_start_date_earlier"]+"</span>";
-         return false;
-      }
-
-      var jump_day   = (document.getElementById('jump_day')) ? document.getElementById('jump_day').value : '';
-      var jump_month = (document.getElementById('jump_month')) ? document.getElementById('jump_month').value : '';
-      var jump_year  = (document.getElementById('jump_year')) ? document.getElementById('jump_year').value : '';
-      var view_type  = (document.getElementById('view_type')) ? document.getElementById('view_type').value : '';
-
-      __doPostBack('view', view_type, jump_year, jump_month, jump_day, 'events_delete_by_range');
-      return true;
-   }
-
-   // Update event
-   function __EventsUpdate(eid){
-      var event_name = document.getElementById('event_name').value;
-      var event_description = document.getElementById('event_description').value;
-
-      if(trim(event_name) == ''){
-         document.getElementById('event_name').focus();
-         document.getElementById('divEventsEdit_msg').innerHTML = "<span class='msg_error'>"+Vocabulary._MSG["err_event_name_empty"]+"</span>";
-         return false;
-      }else if(trim(event_description) == ''){
-         document.getElementById('event_description').focus();
-         document.getElementById('divEventsEdit_msg').innerHTML = "<span class='msg_error'>"+Vocabulary._MSG["err_event_descr_empty"]+"</span>";
-         return false;         
-      }
-
-      var jump_day   = (document.getElementById('jump_day')) ? document.getElementById('jump_day').value : '';
-      var jump_month = (document.getElementById('jump_month')) ? document.getElementById('jump_month').value : '';
-      var jump_year  = (document.getElementById('jump_year')) ? document.getElementById('jump_year').value : '';
-      var view_type  = (document.getElementById('view_type')) ? document.getElementById('view_type').value : '';
-
-      __doPostBack('view', view_type, jump_year, jump_month, jump_day, 'events_update', eid);
-      return true;
-   }   
-
-   // Add single event
-   function __AddEvent(){			
-      var event_name = document.getElementById('event_name').value;
-      var sel_event_name = document.getElementById('sel_event_name').value;
-      var event_description = document.getElementById('event_description').value;
-      var sel_event = __getCheckedValue(document.forms['frmCalendar'].sel_event);
-
-      var event_from_year  = document.getElementById('event_from_year');
-      var event_to_year    = document.getElementById('event_to_year');
-      var event_from_month = document.getElementById('event_from_month');
-      var event_to_month   = document.getElementById('event_to_month');
-      var event_from_day   = document.getElementById('event_from_day');
-      var event_to_day 	   = document.getElementById('event_to_day');
-      var event_from_hour  = document.getElementById('event_from_hour');
-      var event_to_hour    = document.getElementById('event_to_hour');
-      
-      start_datetime  = event_from_year.value+event_from_month.value+event_from_day.value+event_from_hour.value;
-      finish_datetime = event_to_year.value+event_to_month.value+event_to_day.value+event_to_hour.value;
-      
-      if(sel_event == 'new' && trim(event_name) == ''){
-         document.getElementById('event_name').focus();
-         document.getElementById('divAddEvent_msg').innerHTML = "<span class='msg_error'>"+Vocabulary._MSG["msg_enter_event_name"]+"</span>";
-         return false;
-      }else	if(sel_event == 'new' && trim(event_description) == ''){
-         document.getElementById('event_description').focus();
-         document.getElementById('divAddEvent_msg').innerHTML = "<span class='msg_error'>"+Vocabulary._MSG["msg_enter_event_description"]+"</span>";
-         return false;
-      }else	if(sel_event == 'current' && sel_event_name == ''){
-         document.getElementById('divAddEvent_msg').innerHTML = "<span class='msg_error'>"+Vocabulary._MSG["msg_event_not_selected"]+"</span>";
-         return false;
-      }else if(start_datetime >= finish_datetime){
-         document.getElementById('divAddEvent_msg').innerHTML = "<span class='msg_error'>"+Vocabulary._MSG["msg_start_date_earlier"]+"</span>";
-         return false;
-      }
-      
-      var jump_day   = (document.getElementById('jump_day')) ? document.getElementById('jump_day').value : '';
-      var jump_month = (document.getElementById('jump_month')) ? document.getElementById('jump_month').value : '';
-      var jump_year  = (document.getElementById('jump_year')) ? document.getElementById('jump_year').value : '';
-      var view_type  = (document.getElementById('view_type')) ? document.getElementById('view_type').value : '';
-      
-      __doPostBack('view', view_type, jump_year, jump_month, jump_day, 'add');
-      __HideEventForm('divAddEvent');
-      return true;
-   }
-
-   function __DeleteEvent(eid){			
-      if(confirm(Vocabulary._MSG["alert_delete_event"])){			
-         var jump_day   = (document.getElementById('jump_day')) ? document.getElementById('jump_day').value : '';
-         var jump_month = (document.getElementById('jump_month')) ? document.getElementById('jump_month').value : '';
-         var jump_year  = (document.getElementById('jump_year')) ? document.getElementById('jump_year').value : '';
-         var view_type  = (document.getElementById('view_type')) ? document.getElementById('view_type').value : '';
-      
-         __doPostBack('view', view_type, jump_year, jump_month, jump_day, 'delete', eid);				
-      }
-      return false;
-   }
-
-   function __EventSelectedDDL(sel_type, time_block){
-      var val; 
-      // add new event
-      if(sel_type == 1){         
-         document.getElementById('sel_category_name').style.display = "";
-         document.getElementById('sel_event_name').selectedIndex = 0;
-         document.getElementById('sel_event_name').style.display = "none";
-         
-         document.getElementById('event_name').disabled = false;
-         document.getElementById('event_description').disabled = false;         
-
-         // change dropdown boxes "To" according to time block size
-         val = document.getElementById('sel_category_name').value;
-      }else{
-      // select event from existing
-         document.getElementById('sel_category_name').selectedIndex = 0;
-         document.getElementById('sel_category_name').style.display = "none";
-         document.getElementById('sel_event_name').style.display = "";
-         
-         document.getElementById('sel_event_current').checked = true;
-         document.getElementById('event_name').value = '';
-         document.getElementById('event_name').disabled = true;
-         document.getElementById('event_description').value = '';
-         document.getElementById('event_description').disabled = true;
-
-         // change dropdown boxes "To" according to time block size
-         val = document.getElementById('sel_event_name').value;
-      }
-      __CategoryOnChange(val, time_block, true);
-   }
-   
-   // Add events 
-   function __EventsAdd(){
-      var event_name = document.getElementById('event_name').value;
-      var event_description = document.getElementById('event_description').value;
-
-      var event_from_year  = document.getElementById('event_from_year');
-      var event_from_month = document.getElementById('event_from_month');
-      var event_from_day   = document.getElementById('event_from_day');
-      var event_from_hour  = document.getElementById('event_from_hour');
-      var event_to_year    = document.getElementById('event_to_year');
-      var event_to_month   = document.getElementById('event_to_month');
-      var event_to_day 	   = document.getElementById('event_to_day');
-      var event_to_hour    = document.getElementById('event_to_hour');
-
-      var event_from_date_year  = document.getElementById('event_from_date_year');
-      var event_from_date_month = document.getElementById('event_from_date_month');
-      var event_from_date_day   = document.getElementById('event_from_date_day');
-      var event_from_time_hour  = document.getElementById('event_from_time_hour');
-      var event_to_date_year    = document.getElementById('event_to_date_year');
-      var event_to_date_month   = document.getElementById('event_to_date_month');
-      var event_to_date_day 	= document.getElementById('event_to_date_day');
-      var event_to_time_hour    = document.getElementById('event_to_time_hour');
-      
-      var event_insertion_subtype    = document.getElementById('event_insertion_subtype');
-      var event_insertion_type = __getCheckedValue(document.forms['frmCalendar'].event_insertion_type);
-
-      var start_datetime = "";
-      var finish_datetime = "";
-      if(event_insertion_subtype.value == "repeat"){
-         start_datetime  = event_from_date_year.value+event_from_date_month.value+event_from_date_day.value+event_from_time_hour.value.replace(":", "");
-         finish_datetime = event_to_date_year.value+event_to_date_month.value+event_to_date_day.value+event_to_time_hour.value.replace(":", "");
-      }else{
-         start_datetime  = event_from_year.value+event_from_month.value+event_from_day.value+event_from_hour.value.replace(":", "");
-         finish_datetime = event_to_year.value+event_to_month.value+event_to_day.value+event_to_hour.value.replace(":", "");
-      }
-
-      if(trim(event_name) == ''){
-         document.getElementById('event_name').focus();
-         document.getElementById('divEventsAdd_msg').innerHTML = "<span class='msg_error'>"+Vocabulary._MSG["err_event_name_empty"]+"</span>";
-         return false;
-      }else if(trim(event_description) == ''){
-         document.getElementById('event_description').focus();
-         document.getElementById('divEventsAdd_msg').innerHTML = "<span class='msg_error'>"+Vocabulary._MSG["err_event_descr_empty"]+"</span>";
-         return false;         
-      }else if(event_insertion_type == 2 && start_datetime >= finish_datetime){
-         // event_insertion_type == 2 - add occurrences
-         document.getElementById('divEventsAdd_msg').innerHTML = "<span class='msg_error'>"+Vocabulary._MSG["msg_start_date_earlier"]+"</span>";
-         return false;
-      }
-      
-      var jump_day   = (document.getElementById('jump_day')) ? document.getElementById('jump_day').value : '';
-      var jump_month = (document.getElementById('jump_month')) ? document.getElementById('jump_month').value : '';
-      var jump_year  = (document.getElementById('jump_year')) ? document.getElementById('jump_year').value : '';
-      var view_type  = (document.getElementById('view_type')) ? document.getElementById('view_type').value : '';
-      
-      __doPostBack('view', view_type, jump_year, jump_month, jump_day, 'events_insert');
-      return true;
-   }
-  
-   function __EventInsertionType(val){
-      var event_insertion_type = __getCheckedValue(document.forms['frmCalendar'].event_insertion_type);
-      
-      if(val == 1){
-         // select add to list
-         document.getElementById("ea_wrapper").style.display = "none"; 
-         document.getElementById("event_from_hour").disabled = true;
-         document.getElementById("event_from_day").disabled = true;
-         document.getElementById("event_from_month").disabled = true;
-         document.getElementById("event_from_year").disabled = true;
-         document.getElementById("event_to_hour").disabled = true;
-         document.getElementById("event_to_day").disabled = true;
-         document.getElementById("event_to_month").disabled = true;
-         document.getElementById("event_to_year").disabled = true;
-         if(document.getElementById('divEventsAdd_msg')) document.getElementById('divEventsAdd_msg').innerHTML = "";
-      }else{
-         // select add occurences
-         document.getElementById("ea_wrapper").style.display = ""; 
-         document.getElementById("event_from_hour").disabled = false;
-         document.getElementById("event_from_day").disabled = false;
-         document.getElementById("event_from_month").disabled = false;
-         document.getElementById("event_from_year").disabled = false;
-         document.getElementById("event_to_hour").disabled = false;
-         document.getElementById("event_to_day").disabled = false;
-         document.getElementById("event_to_month").disabled = false;
-         document.getElementById("event_to_year").disabled = false;         
-      }      
-   }
-   
-   function __CategoryChange(selected_category, view_type){
-      var selected_category = (selected_category != null) ? selected_category : '';
-      document.getElementById('hid_selected_category').value = selected_category;
-      
-      __doPostBack('view', view_type, null, null, null);      
-   }
-
-   // Change category
-   function __CategoryOnChange(val, time_block, force){
-      var event_insertion_type = __getCheckedValue(document.forms['frmCalendar'].event_insertion_type);
-      var force = (force != null) ? force : false;
-
-      if(event_insertion_type == 2 || force){
-         if(val.indexOf('#') >= 0){
-
-            var event_from_year   = document.getElementById('event_from_year');
-            var event_from_month  = document.getElementById('event_from_month');
-            var event_from_day    = document.getElementById('event_from_day');
-            var event_from_hour   = document.getElementById('event_from_hour');            
-
-            var event_to_year   = document.getElementById('event_to_year');
-            var event_to_month  = document.getElementById('event_to_month');
-            var event_to_day    = document.getElementById('event_to_day');
-            var event_to_hour   = document.getElementById('event_to_hour');
-            
-            
-            var duration = val.split('#', 2);
-            var steps = (duration[1]/time_block);            
-            
-            var from_hour_i = event_from_hour.selectedIndex;
-            var from_day_i = event_from_day.selectedIndex;
-            var from_month_i = event_from_month.selectedIndex;
-            var from_year_i = event_from_year.selectedIndex;            
-            
-            var hours_index=0;
-            for(i=1;i<=steps;i++){
-               if((event_to_hour.options[from_hour_i+i])) hours_index = steps - i;   
-            }
-            
-            if(event_to_hour.options[from_hour_i+steps]){
-               event_to_hour.options[from_hour_i+steps].selected = true;
-               event_to_year.selectedIndex = from_year_i;
-               event_to_month.selectedIndex = from_month_i;
-               event_to_day.selectedIndex = from_day_i;               
-            }else if(event_to_day.options[from_day_i+1]){
-               event_to_day.options[from_day_i+1].selected = true;
-               event_to_hour.selectedIndex = hours_index;
-            }else if(event_to_month.options[from_month_i+1]){
-               event_to_month.options[from_month_i+1].selected = true;
-               event_to_day.selectedIndex = 0;
-               event_to_hour.selectedIndex = hours_index;
-            }else if(event_to_year.options[from_year_i+1]){
-               event_to_year.options[from_year_i+1].selected = true;
-               event_to_month.selectedIndex = 0;
-               event_to_day.selectedIndex = 0;
-               event_to_hour.selectedIndex = hours_index;
-            }
-         }
-      }
-      return true;
-   }
-   
-   
-   
-   /////////////////////////////////////////////////////////////////////////////   
-   // CATEGORIES
-   
-   // Cancel category inserting 
-   function __CategoriesCancel(){      
-      __doPostBack('view', null, null, null, null, 'categories_management');
-      return true;
-   }
-
-   // Back to events management
-   function __CategoriesBack(event_name){
-      __doPostBack('view', null, null, null, null, 'categories_management');
-      return true;
-   }
-
-   // Add new category
-   function __CategoriesAdd(){
-      var category_name        = document.getElementById('category_name').value;
-      var category_description = document.getElementById('category_description').value;
-
-      if(trim(category_name) == ''){
-         document.getElementById('category_name').focus();
-         document.getElementById('divCategoriesAdd_msg').innerHTML = "<span class='msg_error'>"+Vocabulary._MSG["err_cat_name_empty"]+"</span>";
-         return false;
-      }else if(trim(category_description) == ''){
-         document.getElementById('category_description').focus();
-         document.getElementById('divCategoriesAdd_msg').innerHTML = "<span class='msg_error'>"+Vocabulary._MSG["err_cat_descr_empty"]+"</span>";
-         return false;         
-      }
-      
-      var jump_day   = (document.getElementById('jump_day')) ? document.getElementById('jump_day').value : '';
-      var jump_month = (document.getElementById('jump_month')) ? document.getElementById('jump_month').value : '';
-      var jump_year  = (document.getElementById('jump_year')) ? document.getElementById('jump_year').value : '';
-      var view_type  = (document.getElementById('view_type')) ? document.getElementById('view_type').value : '';
-      
-      __doPostBack('view', view_type, jump_year, jump_month, jump_day, 'categories_insert');
-      return true;
-   }
-   
-   // View category details
-   function __CategoriesEdit(cid){
-      __doPostBack('view', null, null, null, null, 'categories_edit', '', '', '', cid);
-      return true;
-   }   
-   
-   // Update category
-   function __CategoriesUpdate(cid){
-      var category_name        = document.getElementById('category_name').value;
-      var category_description = document.getElementById('category_description').value;
-
-      if(trim(category_name) == ''){
-         document.getElementById('category_name').focus();
-         document.getElementById('divCategoriesAdd_msg').innerHTML = "<span class='msg_error'>"+Vocabulary._MSG["err_cat_name_empty"]+"</span>";
-         return false;
-      }else if(trim(category_description) == ''){
-         document.getElementById('category_description').focus();
-         document.getElementById('divCategoriesAdd_msg').innerHTML = "<span class='msg_error'>"+Vocabulary._MSG["err_cat_descr_empty"]+"</span>";
-         return false;
-      }
-
-      __doPostBack('view', false, false, false, false, 'categories_update', '', '', '', cid);
-      return true;
-   }   
-
-   // View category details
-   function __CategoriesDetails(cid){
-      __doPostBack('view', null, null, null, null, 'categories_details', '', '', '', cid);
-      return true;
-   }
-   
-   // Delete category
-   function __CategoriesDelete(cid){
-      if(confirm(Vocabulary._MSG["alert_delete_category"])){			     
-         __doPostBack('view', null, null, null, null, 'categories_delete', '', '', '', cid);
-         return true;
-      }
-      return false;      
-   }
-
-   // Change color
-   function __ChangeColor(el, color){
-      if(document.getElementById(el)){
-         document.getElementById(el).style.backgroundColor = color;      
-      }
-      return true;
-   }
-
-
-   /////////////////////////////////////////////////////////////////////////////
-   // AUXILIARY
-   
-   // returns checked value in radio buttons 
-   function __getCheckedValue(el) {
-      if(!el) return "";
-      var radioLength = el.length;
-      if(radioLength == undefined)
-        if(el.checked)
-            return el.value;
-        else
-            return "";
-      for(var i = 0; i < radioLength; i++) {
-        if(el[i].checked) {
-            return el[i].value;
-        }
-      }
-      return "";
-   }
-   
-   // refill days in days dropdown box
-   function __refillDaysInMonth(type)
-   {
-      var years_dll = document.getElementById(type+'year');
-      var months_dll = document.getElementById(type+'month');
-      var days_dll = document.getElementById(type+'day');
-      var selected_day = document.getElementById(type+'day').selectedIndex;
-      var day_in_month = __daysInMonth(months_dll.value-1, years_dll.value);
-      
-      //alert(selected_day);
-
-      var option;
-      var day_value;
-      var ind = 0;
-      if(selected_day > (day_in_month-1)) selected_day = (day_in_month-1);
-      
-      __cleanDDL(days_dll);
-      for(i = 1; i <= day_in_month; i++) {
-         option = new Option;
-         ind = i - 1;
-         
-         day_value =  (i < 10) ? '0'+i : i;
-         option.text = day_value;
-         option.value = day_value;
-         days_dll.options[ind] = option;
-         if((ind) == selected_day){
-            days_dll.options[ind].selected = true;
-         }
-      }      
-   }
-   
-   function __daysInMonth(month, year)
-   {
-      return 32 - new Date(year, month, 32).getDate();
-   }
-
-   function __cleanDDL(obj)
-   {
-      var options_length = obj.options.length;
-      for (i=0; i<options_length; i++) {
-         obj.remove(0);
-      }
-      obj.options.length = 0;
-   }
- 
-   function __SetFocus(el){
-      if(document.getElementById(el)) document.getElementById(el).focus();
-   }
-   
-   function __toggleCellScroll(el){
-      if(document.getElementById("divDayEventContainer"+el)){
-         if(document.getElementById("divDayEventContainer"+el).style.overflowY == "scroll"){
-            document.getElementById("divDayEventContainer"+el).style.overflowY = "hidden";
-            document.getElementById("dayEventLinkShow"+el).style.display = "";
-            document.getElementById("dayEventLinkCollapse"+el).style.display = "none";
-         }else{
-            document.getElementById("divDayEventContainer"+el).style.overflowY = "scroll";
-            document.getElementById("dayEventLinkShow"+el).style.display = "none";
-            document.getElementById("dayEventLinkCollapse"+el).style.display = "";
-         }
-      }
-   }
-
-   function __switchElements(id1, id2, num, lnk_id1, lnk_id2, store_id, store_val){
-      el1 = (document.getElementById(id1)) ? document.getElementById(id1) : null;
-      el2 = (document.getElementById(id2)) ? document.getElementById(id2) : null;
-      lnk1 = (document.getElementById(lnk_id1)) ? document.getElementById(lnk_id1) : null;
-      lnk2 = (document.getElementById(lnk_id2)) ? document.getElementById(lnk_id2) : null;
-      store_el = (document.getElementById(store_id)) ? document.getElementById(store_id) : null;
-      
-      if(el1 && el2){
-         if(num == "1"){
-            el1.style.display = "";
-            el2.style.display = "none";
-            if(lnk1) lnk1.style.fontWeight = "bold";
-            if(lnk2) lnk2.style.fontWeight = "normal";
-         }else{
-            el1.style.display = "none";
-            el2.style.display = "";
-            if(lnk1) lnk1.style.fontWeight = "normal";
-            if(lnk2) lnk2.style.fontWeight = "bold";
-         }         
-      }
-      if(store_el) store_el.value = store_val;
-   }
-
-   function trim(str, chars) {
-      return ltrim(rtrim(str, chars), chars);
-   }
-    
-   function ltrim(str, chars) {
-      chars = chars || "\\s";
-      return str.replace(new RegExp("^[" + chars + "]+", "g"), "");
-   }
-    
-   function rtrim(str, chars) {
-      chars = chars || "\\s";
-      return str.replace(new RegExp("[" + chars + "]+$", "g"), "");
-   }
-   
-
-//-->
+function __JumpTodayDate(){var a=GL_jump_day;var d=GL_jump_month;var c=GL_jump_year;var b=(document.getElementById("view_type"))?document.getElementById("view_type").value:GL_view_type;
+__doPostBack("view",b,c,d,a);}function __JumpToDate(){var a=(document.getElementById("jump_day"))?document.getElementById("jump_day").value:"";var d=(document.getElementById("jump_month"))?document.getElementById("jump_month").value:"";
+var c=(document.getElementById("jump_year"))?document.getElementById("jump_year").value:"";var b=(document.getElementById("view_type"))?document.getElementById("view_type").value:"";
+__doPostBack("view",b,c,d,a);}function __EventsSort(a,b){var a=(a!=null)?a:"";var b=(b!=null)?b:"";document.getElementById("hid_sort_by").value=a;document.getElementById("hid_sort_direction").value=b;
+__doPostBack("view",null,null,null,null,"events_management");}function __CategoriesSort(a,b){var a=(a!=null)?a:"";var b=(b!=null)?b:"";document.getElementById("hid_sort_by").value=a;
+document.getElementById("hid_sort_direction").value=b;__doPostBack("view",null,null,null,null,"categories_management");}function __doPostBack(c,k,f,d,h,g,j,e,a,b){var c=(c!=null)?c:"view";
+var k=(k!=null)?k:"monthly";var f=(f!=null)?f:GL_today_year;var d=(d!=null)?d:GL_today_mon;var h=(h!=null)?h:GL_today_mday;var g=(g!=null)?g:"";var j=(j!=null)?j:"";
+var e=(e!=null)?e:"1";var a=(a!=null)?a:"columnchart";var b=(b!=null)?b:"";document.getElementById("hid_event_action").value=g;document.getElementById("hid_event_id").value=j;
+document.getElementById("hid_action").value=c;document.getElementById("hid_view_type").value=k;document.getElementById("hid_year").value=f;document.getElementById("hid_month").value=d;
+document.getElementById("hid_day").value=h;document.getElementById("hid_page").value=e;document.getElementById("hid_chart_type").value=a;document.getElementById("hid_category_id").value=b;
+document.getElementById("frmCalendar").submit();}function __HideEventForm(a){document.getElementById(a).style.display="none";}function __ShowEventForm(a){document.getElementById(a).style.display="block";
+}function __CallAddEventForm(b,m,l,o,d,j){document.getElementById(b).style.display="block";var n=document.getElementById("event_from_year");var g=document.getElementById("event_to_year");
+var k=document.getElementById("event_from_month");var h=document.getElementById("event_to_month");var f=document.getElementById("event_from_day");var c=document.getElementById("event_to_day");
+var e=document.getElementById("event_from_hour");var a=document.getElementById("event_to_hour");var j=(j!=null)?j:false;for(i=0;i<e.length;i++){if(j){if(e.options[i].value<d){e.options[i].disabled=true;
+}else{e.options[i].disabled=false;}}if(e.options[i].value==d){e.options[i].disabled=false;e.options[i].selected=true;a.options[i+1].selected=true;}}for(i=0;
+i<f.length;i++){if(f.options[i].value==o){f.options[i].selected=true;c.options[i].selected=true;}}for(i=0;i<k.length;i++){if(k.options[i].value==l){k.options[i].selected=true;
+h.options[i].selected=true;}}for(i=0;i<n.length;i++){if(n.options[i].value==m){n.options[i].selected=true;g.options[i].selected=true;}}document.getElementById("divAddEvent_msg").innerHTML="";
+document.getElementById("event_name").value="";document.getElementById("event_description").value="";document.getElementById("event_name").focus();}function __EventsCancel(){__doPostBack("view",null,null,null,null,"events_management");
+return true;}function __EventsBack(d){var a=(document.getElementById("jump_day"))?document.getElementById("jump_day").value:"";var e=(document.getElementById("jump_month"))?document.getElementById("jump_month").value:"";
+var c=(document.getElementById("jump_year"))?document.getElementById("jump_year").value:"";var b=(document.getElementById("view_type"))?document.getElementById("view_type").value:"";
+var d=(d)?d:"events_management";__doPostBack("view",b,c,e,a,d);return true;}function __EventsDelete(b){if(confirm(Vocabulary._MSG.alert_delete_event_occurrences)){var a=(document.getElementById("jump_day"))?document.getElementById("jump_day").value:"";
+var e=(document.getElementById("jump_month"))?document.getElementById("jump_month").value:"";var d=(document.getElementById("jump_year"))?document.getElementById("jump_year").value:"";
+var c=(document.getElementById("view_type"))?document.getElementById("view_type").value:"";__doPostBack("view",c,d,e,a,"events_delete",b);return true;}return false;
+}function __EventsEdit(b){var a=(document.getElementById("jump_day"))?document.getElementById("jump_day").value:"";var e=(document.getElementById("jump_month"))?document.getElementById("jump_month").value:"";
+var d=(document.getElementById("jump_year"))?document.getElementById("jump_year").value:"";var c=(document.getElementById("view_type"))?document.getElementById("view_type").value:"";
+__doPostBack("view",c,d,e,a,"events_edit",b);return true;}function __EventsDetails(b){var a=(document.getElementById("jump_day"))?document.getElementById("jump_day").value:"";
+var e=(document.getElementById("jump_month"))?document.getElementById("jump_month").value:"";var d=(document.getElementById("jump_year"))?document.getElementById("jump_year").value:"";
+var c=(document.getElementById("view_type"))?document.getElementById("view_type").value:"";__doPostBack("view",c,d,e,a,"events_details",b);return true;
+}function __EventsDeleteByRange(){var f=document.getElementById("event_from_year");var c=document.getElementById("event_to_year");var e=document.getElementById("event_from_month");
+var d=document.getElementById("event_to_month");var b=document.getElementById("event_from_day");var a=document.getElementById("event_to_day");var g=__getCheckedValue(document.forms.frmCalendar.event_insertion_type);
+start_datetime=f.value+e.value+b.value;finish_datetime=c.value+d.value+a.value;if(start_datetime>=finish_datetime){document.getElementById("divEventsDeleteByRange_msg").innerHTML="<span class='msg_error'>"+Vocabulary._MSG.msg_start_date_earlier+"</span>";
+return false;}var l=(document.getElementById("jump_day"))?document.getElementById("jump_day").value:"";var k=(document.getElementById("jump_month"))?document.getElementById("jump_month").value:"";
+var h=(document.getElementById("jump_year"))?document.getElementById("jump_year").value:"";var j=(document.getElementById("view_type"))?document.getElementById("view_type").value:"";
+__doPostBack("view",j,h,k,l,"events_delete_by_range");return true;}function __EventsUpdate(b){var f=document.getElementById("event_name").value;var c=document.getElementById("event_description").value;
+if(trim(f)==""){document.getElementById("event_name").focus();document.getElementById("divEventsEdit_msg").innerHTML="<span class='msg_error'>"+Vocabulary._MSG.err_event_name_empty+"</span>";
+return false;}else{if(trim(c)==""){document.getElementById("event_description").focus();document.getElementById("divEventsEdit_msg").innerHTML="<span class='msg_error'>"+Vocabulary._MSG.err_event_descr_empty+"</span>";
+return false;}}var a=(document.getElementById("jump_day"))?document.getElementById("jump_day").value:"";var g=(document.getElementById("jump_month"))?document.getElementById("jump_month").value:"";
+var e=(document.getElementById("jump_year"))?document.getElementById("jump_year").value:"";var d=(document.getElementById("view_type"))?document.getElementById("view_type").value:"";
+__doPostBack("view",d,e,g,a,"events_update",b);return true;}function __AddEvent(){var h=document.getElementById("event_name").value;var m=document.getElementById("sel_event_name").value;
+var n=document.getElementById("event_description").value;var j=__getCheckedValue(document.forms.frmCalendar.sel_event);var k=document.getElementById("event_from_year");
+var e=document.getElementById("event_to_year");var g=document.getElementById("event_from_month");var f=document.getElementById("event_to_month");var d=document.getElementById("event_from_day");
+var b=document.getElementById("event_to_day");var c=document.getElementById("event_from_hour");var a=document.getElementById("event_to_hour");start_datetime=k.value+g.value+d.value+c.value;
+finish_datetime=e.value+f.value+b.value+a.value;if(j=="new"&&trim(h)==""){document.getElementById("event_name").focus();document.getElementById("divAddEvent_msg").innerHTML="<span class='msg_error'>"+Vocabulary._MSG.msg_enter_event_name+"</span>";
+return false;}else{if(j=="new"&&trim(n)==""){document.getElementById("event_description").focus();document.getElementById("divAddEvent_msg").innerHTML="<span class='msg_error'>"+Vocabulary._MSG.msg_enter_event_description+"</span>";
+return false;}else{if(j=="current"&&m==""){document.getElementById("divAddEvent_msg").innerHTML="<span class='msg_error'>"+Vocabulary._MSG.msg_event_not_selected+"</span>";
+return false;}else{if(start_datetime>=finish_datetime){document.getElementById("divAddEvent_msg").innerHTML="<span class='msg_error'>"+Vocabulary._MSG.msg_start_date_earlier+"</span>";
+return false;}}}}var q=(document.getElementById("jump_day"))?document.getElementById("jump_day").value:"";var p=(document.getElementById("jump_month"))?document.getElementById("jump_month").value:"";
+var l=(document.getElementById("jump_year"))?document.getElementById("jump_year").value:"";var o=(document.getElementById("view_type"))?document.getElementById("view_type").value:"";
+__doPostBack("view",o,l,p,q,"add");__HideEventForm("divAddEvent");return true;}function __DeleteEvent(b){if(confirm(Vocabulary._MSG.alert_delete_event)){var a=(document.getElementById("jump_day"))?document.getElementById("jump_day").value:"";
+var e=(document.getElementById("jump_month"))?document.getElementById("jump_month").value:"";var d=(document.getElementById("jump_year"))?document.getElementById("jump_year").value:"";
+var c=(document.getElementById("view_type"))?document.getElementById("view_type").value:"";__doPostBack("view",c,d,e,a,"delete",b);}return false;}function __EventSelectedDDL(b,a){var c;
+if(b==1){document.getElementById("sel_category_name").style.display="";document.getElementById("sel_event_name").selectedIndex=0;document.getElementById("sel_event_name").style.display="none";
+document.getElementById("event_name").disabled=false;document.getElementById("event_description").disabled=false;c=document.getElementById("sel_category_name").value;
+}else{document.getElementById("sel_category_name").selectedIndex=0;document.getElementById("sel_category_name").style.display="none";document.getElementById("sel_event_name").style.display="";
+document.getElementById("sel_event_current").checked=true;document.getElementById("event_name").value="";document.getElementById("event_name").disabled=true;
+document.getElementById("event_description").value="";document.getElementById("event_description").disabled=true;c=document.getElementById("sel_event_name").value;
+}__CategoryOnChange(c,a,true);}function __EventsAdd(){var e=document.getElementById("event_name").value;var u=document.getElementById("event_description").value;
+var v=document.getElementById("event_from_year");var c=document.getElementById("event_from_month");var b=document.getElementById("event_from_day");var p=document.getElementById("event_from_hour");
+var o=document.getElementById("event_to_year");var a=document.getElementById("event_to_month");var s=document.getElementById("event_to_day");var k=document.getElementById("event_to_hour");
+var m=document.getElementById("event_from_date_year");var f=document.getElementById("event_from_date_month");var x=document.getElementById("event_from_date_day");
+var z=document.getElementById("event_from_time_hour");var A=document.getElementById("event_to_date_year");var h=document.getElementById("event_to_date_month");
+var j=document.getElementById("event_to_date_day");var y=document.getElementById("event_to_time_hour");var r=document.getElementById("event_insertion_subtype");
+var t=__getCheckedValue(document.forms.frmCalendar.event_insertion_type);var n="";var l="";if(r.value=="repeat"){n=m.value+f.value+x.value+z.value.replace(":","");
+l=A.value+h.value+j.value+y.value.replace(":","");}else{n=v.value+c.value+b.value+p.value.replace(":","");l=o.value+a.value+s.value+k.value.replace(":","");
+}if(trim(e)==""){document.getElementById("event_name").focus();document.getElementById("divEventsAdd_msg").innerHTML="<span class='msg_error'>"+Vocabulary._MSG.err_event_name_empty+"</span>";
+return false;}else{if(trim(u)==""){document.getElementById("event_description").focus();document.getElementById("divEventsAdd_msg").innerHTML="<span class='msg_error'>"+Vocabulary._MSG.err_event_descr_empty+"</span>";
+return false;}else{if(t==2&&n>=l){document.getElementById("divEventsAdd_msg").innerHTML="<span class='msg_error'>"+Vocabulary._MSG.msg_start_date_earlier+"</span>";
+return false;}}}var w=(document.getElementById("jump_day"))?document.getElementById("jump_day").value:"";var g=(document.getElementById("jump_month"))?document.getElementById("jump_month").value:"";
+var d=(document.getElementById("jump_year"))?document.getElementById("jump_year").value:"";var q=(document.getElementById("view_type"))?document.getElementById("view_type").value:"";
+__doPostBack("view",q,d,g,w,"events_insert");return true;}function __EventInsertionType(b){var a=__getCheckedValue(document.forms.frmCalendar.event_insertion_type);
+if(b==1){document.getElementById("ea_wrapper").style.display="none";document.getElementById("event_from_hour").disabled=true;document.getElementById("event_from_day").disabled=true;
+document.getElementById("event_from_month").disabled=true;document.getElementById("event_from_year").disabled=true;document.getElementById("event_to_hour").disabled=true;
+document.getElementById("event_to_day").disabled=true;document.getElementById("event_to_month").disabled=true;document.getElementById("event_to_year").disabled=true;
+if(document.getElementById("divEventsAdd_msg")){document.getElementById("divEventsAdd_msg").innerHTML="";}}else{document.getElementById("ea_wrapper").style.display="";
+document.getElementById("event_from_hour").disabled=false;document.getElementById("event_from_day").disabled=false;document.getElementById("event_from_month").disabled=false;
+document.getElementById("event_from_year").disabled=false;document.getElementById("event_to_hour").disabled=false;document.getElementById("event_to_day").disabled=false;
+document.getElementById("event_to_month").disabled=false;document.getElementById("event_to_year").disabled=false;}}function __CategoryChange(a,b){var a=(a!=null)?a:"";
+document.getElementById("hid_selected_category").value=a;__doPostBack("view",b,null,null,null);}function __CategoryOnChange(t,j,d){var p=__getCheckedValue(document.forms.frmCalendar.event_insertion_type);
+var d=(d!=null)?d:false;if(p==2||d){if(t.indexOf("#")>=0){var q=document.getElementById("event_from_year");var f=document.getElementById("event_from_month");
+var e=document.getElementById("event_from_day");var m=document.getElementById("event_from_hour");var l=document.getElementById("event_to_year");var c=document.getElementById("event_to_month");
+var o=document.getElementById("event_to_day");var k=document.getElementById("event_to_hour");var b=t.split("#",2);var r=(b[1]/j);var s=m.selectedIndex;
+var g=e.selectedIndex;var a=f.selectedIndex;var h=q.selectedIndex;var n=0;for(i=1;i<=r;i++){if((k.options[s+i])){n=r-i;}}if(k.options[s+r]){k.options[s+r].selected=true;
+l.selectedIndex=h;c.selectedIndex=a;o.selectedIndex=g;}else{if(o.options[g+1]){o.options[g+1].selected=true;k.selectedIndex=n;}else{if(c.options[a+1]){c.options[a+1].selected=true;
+o.selectedIndex=0;k.selectedIndex=n;}else{if(l.options[h+1]){l.options[h+1].selected=true;c.selectedIndex=0;o.selectedIndex=0;k.selectedIndex=n;}}}}}}return true;
+}function __CategoriesCancel(){__doPostBack("view",null,null,null,null,"categories_management");return true;}function __CategoriesBack(a){__doPostBack("view",null,null,null,null,"categories_management");
+return true;}function __CategoriesAdd(){var f=document.getElementById("category_name").value;var e=document.getElementById("category_description").value;
+if(trim(f)==""){document.getElementById("category_name").focus();document.getElementById("divCategoriesAdd_msg").innerHTML="<span class='msg_error'>"+Vocabulary._MSG.err_cat_name_empty+"</span>";
+return false;}else{if(trim(e)==""){document.getElementById("category_description").focus();document.getElementById("divCategoriesAdd_msg").innerHTML="<span class='msg_error'>"+Vocabulary._MSG.err_cat_descr_empty+"</span>";
+return false;}}var a=(document.getElementById("jump_day"))?document.getElementById("jump_day").value:"";var d=(document.getElementById("jump_month"))?document.getElementById("jump_month").value:"";
+var c=(document.getElementById("jump_year"))?document.getElementById("jump_year").value:"";var b=(document.getElementById("view_type"))?document.getElementById("view_type").value:"";
+__doPostBack("view",b,c,d,a,"categories_insert");return true;}function __CategoriesEdit(a){__doPostBack("view",null,null,null,null,"categories_edit","","","",a);
+return true;}function __CategoriesUpdate(c){var b=document.getElementById("category_name").value;var a=document.getElementById("category_description").value;
+if(trim(b)==""){document.getElementById("category_name").focus();document.getElementById("divCategoriesAdd_msg").innerHTML="<span class='msg_error'>"+Vocabulary._MSG.err_cat_name_empty+"</span>";
+return false;}else{if(trim(a)==""){document.getElementById("category_description").focus();document.getElementById("divCategoriesAdd_msg").innerHTML="<span class='msg_error'>"+Vocabulary._MSG.err_cat_descr_empty+"</span>";
+return false;}}__doPostBack("view",false,false,false,false,"categories_update","","","",c);return true;}function __CategoriesDetails(a){__doPostBack("view",null,null,null,null,"categories_details","","","",a);
+return true;}function __CategoriesDelete(a){if(confirm(Vocabulary._MSG.alert_delete_category)){__doPostBack("view",null,null,null,null,"categories_delete","","","",a);
+return true;}return false;}function __ChangeColor(b,a){if(document.getElementById(b)){document.getElementById(b).style.backgroundColor=a;}return true;}function __getCheckedValue(b){if(!b){return"";
+}var c=b.length;if(c==undefined){if(b.checked){return b.value;}else{return"";}}for(var a=0;a<c;a++){if(b[a].checked){return b[a].value;}}return"";}function __refillDaysInMonth(h){var d=document.getElementById(h+"year");
+var g=document.getElementById(h+"month");var c=document.getElementById(h+"day");var j=document.getElementById(h+"day").selectedIndex;var e=__daysInMonth(g.value-1,d.value);
+var f;var b;var a=0;if(j>(e-1)){j=(e-1);}__cleanDDL(c);for(i=1;i<=e;i++){f=new Option;a=i-1;b=(i<10)?"0"+i:i;f.text=b;f.value=b;c.options[a]=f;if((a)==j){c.options[a].selected=true;
+}}}function __daysInMonth(b,a){return 32-new Date(a,b,32).getDate();}function __cleanDDL(b){var a=b.options.length;for(i=0;i<a;i++){b.remove(0);}b.options.length=0;
+}function __SetFocus(a){if(document.getElementById(a)){document.getElementById(a).focus();}}function __toggleCellScroll(a){if(document.getElementById("divDayEventContainer"+a)){if(document.getElementById("divDayEventContainer"+a).style.overflowY=="scroll"){document.getElementById("divDayEventContainer"+a).style.overflowY="hidden";
+document.getElementById("dayEventLinkShow"+a).style.display="";document.getElementById("dayEventLinkCollapse"+a).style.display="none";}else{document.getElementById("divDayEventContainer"+a).style.overflowY="scroll";
+document.getElementById("dayEventLinkShow"+a).style.display="none";document.getElementById("dayEventLinkCollapse"+a).style.display="";}}}function __switchElements(d,c,b,g,e,f,a){el1=(document.getElementById(d))?document.getElementById(d):null;
+el2=(document.getElementById(c))?document.getElementById(c):null;lnk1=(document.getElementById(g))?document.getElementById(g):null;lnk2=(document.getElementById(e))?document.getElementById(e):null;
+store_el=(document.getElementById(f))?document.getElementById(f):null;if(el1&&el2){if(b=="1"){el1.style.display="";el2.style.display="none";if(lnk1){lnk1.style.fontWeight="bold";
+}if(lnk2){lnk2.style.fontWeight="normal";}}else{el1.style.display="none";el2.style.display="";if(lnk1){lnk1.style.fontWeight="normal";}if(lnk2){lnk2.style.fontWeight="bold";
+}}}if(store_el){store_el.value=a;}}function trim(b,a){return ltrim(rtrim(b,a),a);}function ltrim(b,a){a=a||"\\s";return b.replace(new RegExp("^["+a+"]+","g"),"");
+}function rtrim(b,a){a=a||"\\s";return b.replace(new RegExp("["+a+"]+$","g"),"");}
