@@ -101,9 +101,9 @@ UL.nav_bg li { float:left; font-size: 13px;}
 #header-wrap img{ height: 375px;}
 #header-wrap-logged { padding: 0px 4px 0px 4px; margin-top:3px; height:2px; }
 #header 		{ background: #fff; padding:10px; height:80px; border-bottom:1px solid #ccc; }
-.site_name A	{ color: #6699CC;  font-size:42px; text-decoration:none; }
+.site_name A	{ color: #6699CC;  font-size:30px; text-decoration:none; }
 .site_name A.header	{ color: #6699CC;  font-size:12px; text-decoration:none; }
-.site_name		{ border:0px solid #ff0000; color:#6699CC; padding:10px 10px 0px 10px;  font-size:13px; }
+.site_name		{ border:0px solid #ff0000; color:#6699CC; padding:10px 10px 0px 10px;  font-size:13px; width: 300px; margin-top: 10px;}
 .phones			{
     padding: 7px 8px;
     font-weight: bold;
