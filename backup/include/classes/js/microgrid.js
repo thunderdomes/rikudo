@@ -1,0 +1,209 @@
+////////////////////////////////////////////
+// LAST MODIFIED: 22.05.2011 14:27
+////////////////////////////////////////////
+
+/**
+ *  add listener
+ */
+function __mgAddListener(element, event, listener, bubble) {
+	if(element.addEventListener){
+		if(typeof(bubble) == "undefined") bubble = false;
+		element.addEventListener(event, listener, bubble);
+	}else if(this.attachEvent){
+		element.attachEvent("on" + event, listener);
+	}
+}
+
+/**
+ *   set cookie
+ */
+function __mgSetCookie(name,value,days) {
+    if (days){
+        var date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        var expires = '; expires='+date.toGMTString();
+    }
+    else var expires = '';
+    document.cookie = name+'='+value+expires+'; path=/';
+}
+
+/**
+ *   read cookie
+ */
+function __mgReadCookie(name) {
+   var nameEQ = name + '=';
+   var ca = document.cookie.split(';');
+   for(var i=0;i < ca.length;i++) {
+      var c = ca[i];
+      while (c.charAt(0)==' ') c = c.substring(1,c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+   }
+   return null;
+}
+
+function __mgSetFocus(el){
+    // we need undefined, becaouse IE8 doesn't move focus on textarea
+    if(document.getElementById(el) && !document.getElementById(el).disabled && document.getElementById(el).type != "hidden" && document.getElementById(el).type != undefined){
+        document.getElementById(el).focus();        
+    }
+}
+
+function __mgDoPostBack(suffix, action, rid, sorting_fields, sorting_types, page, operation, operation_type, operation_field)
+{   
+    var suffix         = (suffix != null) ? suffix : '';
+    var frmObj         = document.getElementById('frmMicroGrid_'+suffix);
+   
+    var action         = (action != null) ? action : '';
+    var rid            = (rid != null) ? rid : frmObj.mg_rid.value;
+    var sorting_fields = (sorting_fields != null && sorting_fields != "") ? sorting_fields : frmObj.mg_sorting_fields.value;
+    var sorting_types  = (sorting_types != null && sorting_types != "") ? sorting_types : frmObj.mg_sorting_types.value;
+    var page           = (page != null && page != "") ? page : frmObj.mg_page.value;
+   
+    // for additional operations
+    var operation      = (operation != null) ? operation : frmObj.mg_operation.value;
+    var operation_type = (operation_type != null) ? operation_type : frmObj.mg_operation_type.value;
+    var operation_field = (operation_field != null) ? operation_field : frmObj.mg_operation_field.value;   
+   
+    if(action == "delete" && !confirm(Vocabulary._MSG["alert_delete_record"])){
+        return false;
+    }else{
+		// handle custom alerts
+		if(action == "update" && window['__mgDoModeAlert']){
+			if(!window['__mgDoModeAlert']()){ return false; }
+		}
+
+        if(operation == "filtering"){
+            frmObj.mg_search_status.value = 'active';
+        }else if(operation == "reset_filtering"){
+            frmObj.mg_search_status.value = '';
+        }
+        
+        frmObj.mg_action.value = action;
+        frmObj.mg_rid.value = rid;
+        
+        frmObj.mg_sorting_fields.value = sorting_fields;
+        frmObj.mg_sorting_types.value = sorting_types;
+        frmObj.mg_page.value = page;
+        
+        frmObj.mg_operation.value = operation;
+        frmObj.mg_operation_field.value = operation_field;
+        frmObj.mg_operation_type.value = operation_type;
+        
+        frmObj.submit();
+    }			
+}
+
+
+// set calendar datetime for ddl's
+function setCalendarDate(frm, date_field, datetime_format, date_value, year_start, is_default)
+{
+   year    = (document.getElementById(date_field+'__nc_year')   != null) ? document.getElementById(date_field+'__nc_year').value : '0000';
+   month   = (document.getElementById(date_field+'__nc_month')  != null) ? document.getElementById(date_field+'__nc_month').value : '00';
+   day     = (document.getElementById(date_field+'__nc_day')    != null) ? document.getElementById(date_field+'__nc_day').value : '00';
+   hour    = (document.getElementById(date_field+'__nc_hour')   != null) ? document.getElementById(date_field+'__nc_hour').value : '00';
+   minute  = (document.getElementById(date_field+'__nc_minute') != null) ? document.getElementById(date_field+'__nc_minute').value : '00';
+   second  = (document.getElementById(date_field+'__nc_second') != null) ? document.getElementById(date_field+'__nc_second').value : '00';
+   date_value = (date_value != null) ? date_value : '';
+   year_start = (year_start != null) ? year_start : '0';
+   is_default = (is_default != null) ? is_default : true;
+
+   if(date_value != ''){
+
+        //// Set date if datetime link was clicked / or by default
+        //if(datetime_format.match('d-m-Y') && is_default){
+           // nothing
+        //}else{
+        document.getElementById(date_field).value = date_value;
+        //}
+        year    = date_value.substring(0,4);
+        month   = date_value.substring(5,7);
+        day     = date_value.substring(8,10);        
+        hour     = date_value.substring(11,13);
+        minute   = date_value.substring(14,16);
+        second   = date_value.substring(17,19);
+  
+		var days_in_month = 32 - new Date(year, month-1, 32).getDate();
+		if(day > days_in_month) day = days_in_month;  
+
+        if((datetime_format == 'Y-m-d') || (datetime_format == 'd-m-Y')){
+            document.getElementById(date_field+'__nc_year').selectedIndex = parseInt(year - year_start) + parseInt('1');
+            document.getElementById(date_field+'__nc_month').selectedIndex = month;
+            document.getElementById(date_field+'__nc_day').selectedIndex = day;
+            ///alert("b");
+        }else if((datetime_format == 'Y-m-d H:i:s') || (datetime_format == 'd-m-Y H:i:s') || (datetime_format == 'd-m-Y H:i') || (datetime_format == 'Y-m-d H:i')){         
+            document.getElementById(date_field+'__nc_year').selectedIndex = parseInt(year - year_start) + parseInt('1');
+            document.getElementById(date_field+'__nc_month').selectedIndex = month;
+            document.getElementById(date_field+'__nc_day').selectedIndex = day;
+            document.getElementById(date_field+'__nc_hour').selectedIndex = parseInt(trimNumber(hour)) + parseInt("1");
+            document.getElementById(date_field+'__nc_minute').selectedIndex = parseInt(trimNumber(minute)) + parseInt("1");
+            if(datetime_format != 'd-m-Y H:i' && datetime_format != 'Y-m-d H:i') document.getElementById(date_field+'__nc_second').selectedIndex = parseInt(second) + parseInt('1');
+            //alert("c" + hour+' '+trimNumber(hour));            
+            document.getElementById(date_field).value = year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second;
+        }else if(datetime_format == 'm-d-Y'){
+            ///alert("m-d-Y "+ month+' '+day+' '+year);
+            document.getElementById(date_field+'__nc_year').selectedIndex = parseInt(year - year_start) + parseInt('1');
+            document.getElementById(date_field+'__nc_month').selectedIndex = month;
+            document.getElementById(date_field+'__nc_day').selectedIndex = day;
+        }else{
+            document.getElementById(date_field+'__nc_year').selectedIndex = parseInt(year - year_start) + parseInt('1');
+            document.getElementById(date_field+'__nc_month').selectedIndex = month;
+            document.getElementById(date_field+'__nc_day').selectedIndex = day;
+            ///alert("e");
+        }
+    }else{      
+
+		var days_in_month = 32 - new Date(year, month-1, 32).getDate();
+		if(day > days_in_month) day = days_in_month;  
+
+        // Set date if ddl was changed                    
+        if(datetime_format == 'Y-m-d'){
+            document.getElementById(date_field).value = year+'-'+month+'-'+day;
+        }else if(datetime_format == 'd-m-Y'){
+            document.getElementById(date_field).value = day+'-'+month+'-'+year;
+        }else if(datetime_format == 'Y-m-d H:i:s'){
+            document.getElementById(date_field).value = year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second;
+        }else if(datetime_format == 'Y-m-d H:i'){
+            document.getElementById(date_field).value = year+'-'+month+'-'+day+' '+hour+':'+minute;
+        }else if(datetime_format == 'd-m-Y H:i:s'){
+            document.getElementById(date_field).value = day+'-'+month+'-'+year+' '+hour+':'+minute+':'+second;
+        }else if(datetime_format == 'd-m-Y H:i'){
+            document.getElementById(date_field).value = day+'-'+month+'-'+year+' '+hour+':'+minute;
+        }else{
+            document.getElementById(date_field).value = year+'-'+month+'-'+day;
+        }
+    }
+    // Clear date field if was entered date empty
+    if((document.getElementById(date_field).value.length != 10) && (document.getElementById(date_field).value.length != 19) && (document.getElementById(date_field).value.length != 16)){
+        document.getElementById(date_field).value = '';
+    }
+
+   // refill days in month
+   refillDaysInMonth(date_field, year, month);
+}
+
+// refill days according ion selected month
+function refillDaysInMonth(date_field, year, month)
+{
+   var dayDDL = (document.getElementById(date_field+'__nc_day') != null) ? document.getElementById(date_field+'__nc_day') : false;
+   var days_in_month = 32 - new Date(year, month-1, 32).getDate();
+   //alert(days_in_month);
+   if(dayDDL && month != ""){
+      for(i = 1; i <= 31; i++){
+         if(i > days_in_month) dayDDL.options[i].disabled = true;
+         else dayDDL.options[i].disabled = false;
+      }
+      if(dayDDL.options[dayDDL.selectedIndex].disabled){
+         dayDDL.selectedIndex = days_in_month;
+      }
+   }else if(month == ""){
+      for(i = 1; i <= 31; i++){
+         dayDDL.options[i].disabled = false;
+      }      
+   }   
+}
+
+// remove leading zero
+function trimNumber(s) {
+  while (s.substr(0,1) == '0' && s.length>1) { s = s.substr(1,9999); }
+  return s;
+}

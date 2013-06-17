@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:syn="http://purl.org/rss/1.0/modules/syndication/" xmlns:admin="http://webns.net/mvcb/" xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0">
+<channel rdf:about="http://astamanavilla.com/feeds/rss.xml">
+<title>Astamana Villa</title>
+<link>http://astamanavilla.com/feeds/rss.xml</link>
+<description>Astamana Villa</description>
+<dc:language>en-us</dc:language>
+<dc:rights>(c) copyright</dc:rights>
+<dc:date>2013-05-15T01:13:11+02:00</dc:date>
+<dc:creator>Astamana Villa</dc:creator>
+<dc:subject>Astamana Villa</dc:subject>
+<items>
+<rdf:Seq><rdf:li rdf:resource="http://astamanavilla.com/index.php?page=news&amp;nid=1"/>
+</rdf:Seq>
+</items>
+<image rdf:resource="http://astamanavilla.com/images/icons/logo.png"/>
+</channel>
+<item rdf:about="http://astamanavilla.com/index.php?page=news&amp;nid=1">
+<title>Get Ready for our soft opening..!</title>
+<link>http://astamanavilla.com/index.php?page=news&amp;nid=1</link>
+<description>Can't wait for the soft opening of Astamana Villa..!</description>
+<feedburner:origLink>http://astamanavilla.com/index.php?page=news&amp;nid=1</feedburner:origLink>
+</item>
+</rdf:RDF>
