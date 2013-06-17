@@ -25,7 +25,7 @@ header('content-type: text/html; charset=utf-8');
 	<base href="<?php echo APPHP_BASE; ?>" /> 
 	<link href="<?php echo APPHP_BASE; ?>images/icons/apphp.ico" rel="SHORTCUT ICON" />
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,300' rel='stylesheet' type='text/css'>
-	<link href="<?php echo APPHP_BASE; ?>templates/<?php echo Application::Get('template');?>/css/style.css" type="text/css" rel="stylesheet" />
+	<link href="<?php echo APPHP_BASE; ?>templates/<?php echo Application::Get('template');?>/css/style.min.css" type="text/css" rel="stylesheet" />
 	<?php if(Application::Get('lang_dir') == 'rtl'){ ?>
 	<link href="<?php echo APPHP_BASE; ?>templates/<?php echo Application::Get('template');?>/css/style-rtl.css" type="text/css" rel="stylesheet" />
 	<?php } ?>
