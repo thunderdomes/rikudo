@@ -28,8 +28,7 @@ defined('APPHP_EXEC') or die('Restricted Access');
 		?>
 		</strong>
 	</div>
-	<?php echo Search::DrawQuickSearch(); ?>
-	<div class="phones <?php echo 'f'.Application::Get('defined_right'); ?>">
+	<div class="phones">
 		<?php Hotels::DrawPhones(); ?>
 	</div>
 </div>

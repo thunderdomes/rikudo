@@ -362,7 +362,6 @@ class Application {
 		
 		if(!self::Get('js_included', 'lytebox')){
 			$output .= '<link rel="stylesheet" href="'.APPHP_BASE.'modules/lytebox/css/lytebox.css" type="text/css" media="screen" />'.$nl;
-			$output .= '<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">';
 			$output .= '<script type="text/javascript" src="'.APPHP_BASE.'modules/lytebox/js/lytebox.js"></script>'.$nl;
 			Application::Set('js_included', 'lytebox');
 		}
