@@ -14,6 +14,7 @@ defined('APPHP_EXEC') or die('Restricted Access');
 
 <!-- header -->
 <div id="header">
+	<div class="wrapper-header">
 	<div class="site_name <?php echo 'f'.Application::Get('defined_left'); ?>">
 		<a href="<?php echo APPHP_BASE; ?>index.php"><?php echo ($objLogin->IsLoggedInAsAdmin()) ? _ADMIN_PANEL : $objSiteDescription->DrawHeader('header_text'); ?></a>
 		<br />
@@ -31,4 +32,5 @@ defined('APPHP_EXEC') or die('Restricted Access');
 	<div class="phones <?php echo 'f'.Application::Get('defined_right'); ?>">
 		<?php Hotels::DrawPhones(); ?>
 	</div>
+</div>
 </div>

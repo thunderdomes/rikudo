@@ -48,7 +48,8 @@ $objLogin = new Login();
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Reservation Form</title>
-    <link href="<?php echo $host; ?>templates/default/css/style.css" type="text/css" rel="stylesheet" />    
+    <link href="<?php echo $host; ?>templates/default/css/style.css" type="text/css" rel="stylesheet" /> 
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,300' rel='stylesheet' type='text/css'>   
 </head>
 <body>
     <?php

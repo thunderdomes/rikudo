@@ -1,10 +1,14 @@
 <?php
     
     define('DATABASE_HOST', 'localhost');           // Database host
-    define('DATABASE_NAME', 'astam235_403');           // Name of the database to be used
-    define('DATABASE_USERNAME', 'astam235_403user');       // User name for access to database
-    define('DATABASE_PASSWORD', 'curve8310');   // Password for access to database
+    define('DATABASE_NAME', 'astam');           // Name of the database to be used
+    define('DATABASE_USERNAME', 'root');       // User name for access to database
+    define('DATABASE_PASSWORD', '');   // Password for access to database
     
+    //define('DATABASE_NAME', 'astam235_403');           // Name of the database to be used
+    //define('DATABASE_USERNAME', 'astam235_403user');       // User name for access to database
+    //define('DATABASE_PASSWORD', 'curve8310'); 
+
     define('DB_PREFIX', 'aphs_');		        // Unique prefix of all tables in the database
 
     define('INSTALLATION_KEY', '17dc1d494u'); // Unique key for installation

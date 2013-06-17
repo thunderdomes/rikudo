@@ -24,7 +24,7 @@ header('content-type: text/html; charset=utf-8');
 
     <base href="<?php echo APPHP_BASE; ?>" /> 
 	<link href="<?php echo APPHP_BASE; ?>images/icons/apphp.ico" rel="SHORTCUT ICON" />
-  
+  	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,300' rel='stylesheet' type='text/css'>
     <link href="<?php echo APPHP_BASE; ?>templates/<?php echo Application::Get('template');?>/css/style.css" type="text/css" rel="stylesheet" />
 	<?php if(Application::Get('lang_dir') == 'rtl'){ ?>
 		<link href="<?php echo APPHP_BASE; ?>templates/<?php echo Application::Get('template');?>/css/style-rtl.css" type="text/css" rel="stylesheet" />
@@ -52,7 +52,7 @@ header('content-type: text/html; charset=utf-8');
 
 <body dir="<?php echo Application::Get('lang_dir');?>">
 <a name="top"></a>
-<div id="wrap">
+
 	
 	<!-- HEADER -->
 	<?php include_once 'templates/'.Application::Get('template').'/header.php'; ?>
@@ -60,6 +60,7 @@ header('content-type: text/html; charset=utf-8');
 		// Draw header menu
 		Menu::DrawHeaderMenu();
 	?>	
+	<div id="wrap">
 		<!-- header-box begin -->
 		<?php
 			if(!$objLogin->IsLoggedInAsCustomer()){
