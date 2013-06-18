@@ -494,7 +494,7 @@ class Hotels extends MicroGrid {
 		$output = '';
 		
 		if($hotels[1] == 1){
-			$output =' Phone'.$hotels[0][0]['phone'].'  -  Fax '.$hotels[0][0]['fax'];	
+			$output ='Phone '.$hotels[0][0]['phone'].'  -  Fax '.$hotels[0][0]['fax'];	
 		}	
 	
 		if($draw) echo $output;
