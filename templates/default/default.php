@@ -96,6 +96,7 @@ header('content-type: text/html; charset=utf-8');
 		?>		  
 
 		<div id="content-wrap">
+			<?php if(Application::Get('page') == 'home'): ?>
 			<div id="left-column<?php echo '-'.Application::Get('defined_left'); ?>">
 				<!-- currencies -->
 				<div class='left_box_container'>
@@ -113,7 +114,7 @@ header('content-type: text/html; charset=utf-8');
 				?>                            
 				<!-- END OF LEFT COLUMN -->				
 			</div>
-
+			<?php endif; ?>
 			<div id="content<?php echo '-'.Application::Get('defined_right'); ?>">
 				<!-- MAIN CONTENT -->
 				<?php					
