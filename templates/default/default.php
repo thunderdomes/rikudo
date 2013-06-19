@@ -115,7 +115,11 @@ header('content-type: text/html; charset=utf-8');
 				<!-- END OF LEFT COLUMN -->				
 			</div>
 			<?php endif; ?>
+			<?php if(Application::Get('page') == 'home'): ?>
 			<div id="content<?php echo '-'.Application::Get('defined_right'); ?>">
+			<?php else: ?>
+			<div id="content-full">
+			<?php endif; ?>
 				<!-- MAIN CONTENT -->
 				<?php					
 				if((Application::Get('page') != '') && file_exists('page/'.Application::Get('page').'.php')){
