@@ -67,7 +67,9 @@ header('content-type: text/html; charset=utf-8');
 		<!-- header-box begin -->
 		<?php
 		if(!$objLogin->IsLoggedInAsCustomer()){
-			echo '<div id="header-wrap">'.$banner_image.'</div>';
+			if(Application::Get('page') == 'home'){
+				echo '<div id="header-wrap">'.$banner_image.'</div>';
+			}
 		}else{
 			echo '<div id="header-wrap-logged"></div>';
 		}		
