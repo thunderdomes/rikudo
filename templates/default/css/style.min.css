@@ -12,8 +12,8 @@ INPUT.box{width:auto}INPUT[type=submit],INPUT[type=button]{background-color:#69c
 SELECT>OPTION{padding:0 3px 0 3px}.mgrid_label A{text-decoration:none;color:#69c}.mgrid_label A:hover{text-decoration:none;color:#000}.fleft{float:left}
 .fright{float:right}.alignright{text-align:right}.aligncenter{text-align:center}body{background:#fff url('http://www.belairbroadbeach.com.au/system/images/pattern.jpg') repeat-x;font-family:'Open Sans',sans-serif;margin:0;padding:0}
 #wrap{width:961px;margin-left:auto;margin-right:auto}#left-column{width:215px;margin:0}#left-column-left{width:280px;margin:0;float:left}#left-column-right{width:215px;margin:0;float:right}
-#languages-wrap{position:absolute;margin:5px 0 0 18px;width:203px;height:55px}#languages-wrap DIV{float:left}#content-wrap{padding:0 10px 0 10px}#content{padding:0 0 0 5px;width:695px;border:0 solid #f00}
-#content-left{padding:0 0 0 5px;width:695px;float:left;border:0 solid #f00}#content-right{padding:0 0 0 5px;width:635px;float:right;border:0 solid #f00}
+#languages-wrap{position:absolute;margin:5px 0 0 18px;width:203px;height:55px}#languages-wrap DIV{float:left}#content-wrap{padding:0 10px 0 10px;background:#fff;margin-top:40px;border:1px solid #efefef;padding-top:20px}
+#content{padding:0 0 0 5px;width:695px;border:0 solid #f00}#content-left{padding:0 0 0 5px;width:695px;float:left;border:0 solid #f00}#content-right{padding:0 0 0 5px;width:635px;float:right;border:0 solid #f00}
 #content UL{margin-left:15px}UL.nav{height:30px;list-style-type:none}UL.nav li{font-size:18px;white-space:nowrap}UL.nav li a{display:block;color:#a3c2e0;padding:0 15px 0 25px;text-decoration:none}
 UL.nav li a:hover,UL.nav li.active a{color:#666}UL.nav_bg li{float:left;font-size:13px}#header-wrap{padding:0 4px 0 4px;margin-top:3px;height:510px}#header-wrap img{height:500px}
 #header-wrap-logged{padding:0 4px 0 4px;margin-top:3px;height:2px}#header{background:#fff;padding:10px;height:80px;border-bottom:1px solid #ccc}.site_name A{color:#69c;font-size:30px;text-decoration:none}

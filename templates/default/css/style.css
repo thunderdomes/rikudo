@@ -80,7 +80,11 @@ body{
 #languages-wrap DIV { float:left; }
 
 /* CONTENT */
-#content-wrap 	{ padding: 0px 10px 0px 10px; }
+#content-wrap 	{ padding: 0 10px 0 10px;
+background: #fff;
+margin-top: 40px;
+border: 1px solid #efefef;
+padding-top: 20px;}
 #content 	  	{ padding: 0px 0px 0px 5px; width: 695px; border:0px solid #ff0000; }
 #content-left  	{ padding: 0px 0px 0px 5px; width: 695px; float:left; border:0px solid #ff0000; }
 #content-right 	{ padding: 0px 0px 0px 5px; width: 635px; float:right; border:0px solid #ff0000; }
